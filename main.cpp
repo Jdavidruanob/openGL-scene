@@ -24,8 +24,8 @@ protected:
 
 	cwc::glShaderManager SM;
 	cwc::glShader* shader;           // Shader para objetos sin textura (ej. con solo color o material)
-	cwc::glShader* shaderTextura;    // Shader para objetos que s� usan texturas
-	std::vector<Objeto3D> escena; // Un �nico vector que contiene todos los objetos de nuestra escena.
+	cwc::glShader* shaderTextura;    // Shader para objetos que si usan texturas
+	std::vector<Objeto3D> escena; // Un unico vector que contiene todos los objetos de nuestra escena.
 	clock_t time0, time1;
 	float timer010;  // timer counting 0->1->0
 	bool bUp;        // flag if counting up or down.
@@ -37,7 +37,7 @@ public:
 
 	virtual void OnInit()
 	{
-		// --- 1. Configuraci�n Inicial de OpenGL ---
+		// --- 1. Configuracion Inicial de OpenGL ---
 		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 		glShadeModel(GL_SMOOTH);
 		glEnable(GL_DEPTH_TEST);
@@ -46,26 +46,58 @@ public:
 		// --- 2. Carga de Shaders ---
 		shader = SM.loadfromFile("vertexshader.txt", "fragmentshader.txt");
 		if (shader == 0)
-			std::cout << "Error al cargar el shader b�sico\n";
+			std::cout << "Error al cargar el shader basico\n";
 
 		shaderTextura = SM.loadfromFile("vertexshaderT.txt", "fragmentshaderT.txt");
 		if (shaderTextura == 0)
 			std::cout << "Error al cargar el shader de texturas\n";
 
-		// --- 3. Creaci�n de Objetos y Composici�n de la Escena ---
+		// --- 3. Creacion de Objetos y Composicion de la Escena ---
 
-		// prueba con objeto natural (Palmera)
+		// objeto con textura (Palmera)
+		Objeto3D palmera(shaderTextura); // Le decimos que use el shader de texturas
+		palmera.cargarMalla("./Mallas/CordylineFREE.obj");
+		palmera.agregarTextura("./Mallas/CordylineFREE_BaseColor.png");
+		palmera.posX = -1.5f;
+		palmera.escalaX = palmera.escalaY = palmera.escalaZ = 0.9f;
+		escena.push_back(palmera); // agregamos a la escena
+
+		// objeto artificial (Chinchorro)
+		Objeto3D chinc(shaderTextura); // Le decimos que use el shader de texturas
+		chinc.cargarMalla("./Mallas/chinchorro.obj");
+		chinc.agregarTextura("./Mallas/chinchorro_base.jpeg");
+		chinc.posX = 1.5f;
+		chinc.escalaX = chinc.escalaY = chinc.escalaZ = 0.9f;
+		escena.push_back(chinc); 
+
+		// objeto artificial adicional (silla)
+		Objeto3D silla(shaderTextura); // Le decimos que use el shader de texturas
+		silla.cargarMalla("./Mallas/chear_08_obj.obj");
+		silla.agregarTextura("./Mallas/silla_textura.jpg");
+		silla.posY = 1.5f;
+		silla.escalaX = silla.escalaY = silla.escalaZ = 0.9f;
+		escena.push_back(silla); 
+
+		// objeto natural (Planta)
 		Objeto3D planta(shaderTextura); // Le decimos que use el shader de texturas
-		planta.cargarMalla("./Mallas/CordylineFREE.obj");
-		planta.agregarTextura("./Mallas/CordylineFREE_BaseColor.png");
-		planta.posX = -1.5f; // Lo movemos a la izquierda
-		planta.escalaX = planta.escalaY = planta.escalaZ = 0.9f; 
-		escena.push_back(planta); // agregamos a la escena
+		planta.cargarMalla("./Mallas/hoewa_Forsteriana_1.obj");
+		planta.agregarTextura("./Mallas/howea_f_leaf_1_diffuse.jpg");
+		planta.posX = 0.0f; 
+		planta.escalaX = planta.escalaY = planta.escalaZ = 0.9f;
+		escena.push_back(planta); 
+
+		// objeto creado por la tribu (suelo)
+		Objeto3D suelo(shaderTextura); // Le decimos que use el shader de texturas
+		suelo.cargarMalla("./Mallas/suelo.obj");
+		suelo.agregarTextura("./Mallas/suelo_textura.jpg");
+		suelo.posY = -1.5f; 
+		suelo.escalaX = suelo.escalaY = suelo.escalaZ = 6.0f;
+		escena.push_back(suelo); // agregamos a la escena
 
 		
 		// aqui agregar de la misma manera los objetos que se deseen. 
 
-		// --- 4. Inicializaci�n del Timer y la Luz ---
+		// --- 4. Inicializacion del Timer y la Luz ---
 		time0 = clock();
 		timer010 = 0.0f;
 		bUp = true;
@@ -82,7 +114,7 @@ public:
 		// Se usa un bucle para dibujar laos objetos de la escena
 		for (int i = 0; i < escena.size(); ++i)
 		{
-			escena[i].dibujar(); // Cada objeto sabe c�mo dibujarse a s� mismo
+			escena[i].dibujar(); // Cada objeto sabe c�mo dibujarse a si mismo
 		}
 
 		glPopMatrix();

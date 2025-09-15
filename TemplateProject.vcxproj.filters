@@ -70,6 +70,7 @@
       <Filter>cwc\include</Filter>
     </ClInclude>
     <ClInclude Include="glm.h" />
+    <ClInclude Include="Objeto3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glew\source\glew.c">
@@ -155,6 +156,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="glm.cpp" />
+    <ClCompile Include="Objeto3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="freeglut\source\freeglutdll.def">

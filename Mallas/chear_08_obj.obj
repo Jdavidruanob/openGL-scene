@@ -7,8 +7,6 @@ mtllib chear_08_obj.mtl
 # object Chear_VIII
 #
 
-usemtl wire_115115115
-
 v  -87.0795 314.1920 58.6657
 v  -87.0795 325.4777 58.5110
 v  -87.0797 312.3289 -263.5486
